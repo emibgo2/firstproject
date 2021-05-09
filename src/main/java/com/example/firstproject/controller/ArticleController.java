@@ -5,14 +5,14 @@ import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @Slf4j
 public class ArticleController {
+
 
     @Autowired // 스프링 부트가 미리 생성해놓은 객체를 가져다가 자동 연결!
     private ArticleRepository articleRepository;
@@ -22,18 +22,37 @@ public class ArticleController {
         return "articles/new";
     }
 
-    @PostMapping("/articles/create")
-    public String createArticle(ArticleForm form){
-        log.info(form.toString());
-        // System.out.println(form.toString()); ->로깅기능으로 대체!
+    @PutMapping("/articles")
+    public Article putArticle(Article form) {
+        return articleRepository.save(form);
+    }
 
-        // 1. DTO를 Entity로 변환!
-        Article article= form.toEntity();
-        log.info(article.toString());
+    @PostMapping("/articles")
+    public Article postArticle(Article form) {
+        return articleRepository.save(form);
+    }
 
-        //2. Repository에게 Entity를 DB안에 저장하게 함!
-        Article saved = articleRepository.save(article);
-        log.info(saved.toString());
-        return "";
+    @DeleteMapping("/articles")
+    public void deleteArticle(int id) {
+        articleRepository.deleteById(id);
+    }
+
+    // id로 DB 데이터 확인
+    @GetMapping("/articles")
+    public Article getArticle(int id) {
+        return articleRepository.findById(id).orElse(null);
+        // 값이 있을때는 id를 리턴하고 없으면 null 을 리턴
+    }
+
+
+    // DB의 모든 목록 확인
+    @GetMapping("/articles/list")
+    public List<Article> getArticelList() {
+        return (List<Article>) articleRepository.findAll();
+    }
+
+    @GetMapping("/articles/content")
+    public List<Article>  getArticel(String content) {
+        return (List<Article>)  articleRepository.findByContent(content);
     }
 }

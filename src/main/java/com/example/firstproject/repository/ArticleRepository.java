@@ -3,6 +3,8 @@ package com.example.firstproject.repository;
 import com.example.firstproject.entity.Article;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ArticleRepository extends CrudRepository <Article, Long>{
+import java.util.List;
 
+public interface ArticleRepository extends CrudRepository <Article, Integer>{
+    List<Article> findByContent(String content);
 }
