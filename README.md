@@ -1,4 +1,4 @@
-# Spring Boot Start
+#Spring Boot Start
 2021. 05.02
 Spring 시작
       
@@ -11,5 +11,4 @@ View 템플릿 생성
 , 데이터 베이스 연결
 , 데이터 베이스 조회,생성,수정,삭제
 , Lombok 
-, 설정 파일 및 프로파일 사용하기
-, properties 사용법
+, 
